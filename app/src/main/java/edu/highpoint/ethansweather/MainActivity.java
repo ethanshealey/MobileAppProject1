@@ -3,8 +3,12 @@ package edu.highpoint.ethansweather;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,6 +26,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Ethan Shealey
@@ -37,11 +43,12 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Declare widgets
      */
-    EditText locationSearch;
+    AutoCompleteTextView locationSearch;
     TextView location;
     TextView date;
     TextView country;
     Button searchBtn;
+    Button reset;
     TextView temp;
     TextView condition;
     ImageView icon;
@@ -63,24 +70,26 @@ public class MainActivity extends AppCompatActivity {
         /**
          * Init widgets
          */
-        locationSearch = (EditText) findViewById(R.id.locationSearch);
+        locationSearch = (AutoCompleteTextView) findViewById(R.id.locationSearch);
         location = (TextView) findViewById(R.id.location);
         country = (TextView) findViewById(R.id.country);
         date = (TextView) findViewById(R.id.date);
         searchBtn = (Button) findViewById(R.id.search);
+        reset = (Button) findViewById(R.id.resetLocation);
         temp = (TextView) findViewById(R.id.temp);
         condition = (TextView) findViewById(R.id.condition);
         icon = (ImageView) findViewById(R.id.weatherIcon);
         weather = new Weather();
         weather.obj = null;
 
+
         /**
          * Set default values to search bar and weather data
          */
         locationSearch.setText("High Point, NC");
-        callAPI("High Point, NC", weather);
+        weather.getWeather("High Point, NC");
         try {
-            setData();
+            setWeatherData();
         } catch (InterruptedException | JSONException | ParseException e) {
             e.printStackTrace();
         }
@@ -94,78 +103,24 @@ public class MainActivity extends AppCompatActivity {
             // hide the keyboard
             hideKeyboard(view);
             // reset the API object to null
-            weather.obj = null;
+            if(!locationSearch.getText().toString().matches(""))
+                weather.obj = null;
             // call the API and set the data
-            callAPI(query, weather);
+            weather.getWeather(query);
             try {
-                setData();
+                setWeatherData();
             } catch (InterruptedException | JSONException | ParseException e) {
                 e.printStackTrace();
             }
         });
-    }
 
-    /**
-     * getWeather - call the API from weatherapi.com
-     *
-     * @param loc - the user requested location
-     * @param w - the API object used to store the data
-     * @throws IOException
-     * @throws JSONException
-     */
-    public static void getWeather(String loc, Weather w) throws IOException, JSONException {
         /**
-         * Create a new URL object of the API call
+         * onClick for resetButton
          */
-        URL url = new URL("https://api.weatherapi.com/v1/current.json?key=a60212c2ecf94da9a2101045212705&q=" + loc + "&aqi=no");
-        String nl = null;
-        /**
-         * Create an HTTP connection and set method to GET
-         */
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        /**
-         * Find the response code -- 200 OK is what we want
-         */
-        int resCode = con.getResponseCode();
-        /**
-         * if response code is what we want ->
-         */
-        if (resCode == HttpURLConnection.HTTP_OK) {
-            //Read in the data from the API
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            StringBuffer res = new StringBuffer();
-            while ((nl = in.readLine()) != null) {
-                res.append(nl);
-            }
-            in.close();
-            try {
-                JSONObject obj = new JSONObject((res.toString()));
-                // save the data to the weather object passed in
-                w.obj = obj;
-            }
-            catch(JSONException e) {
-                System.out.println(e);
-            }
+        reset.setOnClickListener(view -> {
+            locationSearch.setText("");
+        });
 
-        }
-    }
-
-    /**
-     * callAPI -- wrapper function for getWeather to run
-     *            on another thread
-     * @param loc - the user requested location
-     * @param w - the API object used to store the data
-     */
-    public static void callAPI(String loc, Weather w) {
-        new Thread(() -> {
-            try {
-                getWeather(loc, w);
-            }
-            catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 
     /**
@@ -176,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
      * @throws JSONException
      * @throws ParseException
      */
-    public void setData() throws InterruptedException, JSONException, ParseException {
+    public void setWeatherData() throws InterruptedException, JSONException, ParseException {
         while(weather.obj == null) {
             Thread.sleep(10);
         }
@@ -185,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         country.setText(weather.getCountry());
         condition.setText(weather.getCondition());
         date.setText(weather.getDate());
-        System.out.println(weather.getIcon());
         Picasso.get().load(weather.getIcon()).into(icon);
     }
 

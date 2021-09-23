@@ -5,112 +5,141 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#454545"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="381dp"
-        android:layout_height="353dp"
-        android:layout_marginStart="13dp"
+        android:layout_width="357dp"
+        android:layout_height="669dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="27dp"
+        android:src="@drawable/box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search"
-        app:srcCompat="@android:drawable/editbox_dropdown_dark_frame" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/weatherIcon"
-        android:layout_width="134dp"
-        android:layout_height="133dp"
-        android:layout_marginStart="-175dp"
-        android:layout_marginTop="-260dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@android:drawable/btn_star" />
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginEnd="176dp"
+        android:fontFamily="@font/amaranth_italic"
+        android:text="LOCATION"
+        android:textAlignment="viewStart"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <TextView
+        android:id="@+id/condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="154dp"
+        android:layout_marginEnd="155dp"
+        android:fontFamily="@font/amaranth_bold"
+        android:text="CONDITION"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weatherIcon" />
 
     <Button
         android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="129dp"
+        android:backgroundTint="#77A4FD"
         android:text="Search"
         app:layout_constraintStart_toEndOf="@+id/locationSearch"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/locationSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="133dp"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:hint="Enter a place"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#F6F6F6"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="-8dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginEnd="146dp"
         android:fontFamily="@font/archivo_black"
         android:text="0°F"
         android:textColor="#FFFFFF"
-        android:textSize="125px"
+        android:textSize="69dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/condition" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-
-        android:layout_marginTop="96dp"
-        android:fontFamily="@font/amaranth2"
-        android:text="DATE"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationSearch" />
 
     <TextView
         android:id="@+id/country"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="178dp"
+        android:layout_marginEnd="178dp"
         android:fontFamily="@font/amaranth_italic"
         android:text="COUNTRY"
         android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location" />
 
-    <TextView
-        android:id="@+id/condition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="-346dp"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/amaranth_bold"
-        android:text="CONDITION"
-        android:textColor="#FFFFFF"
-        android:textSize="50px"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/country" />
+    <ImageView
+        android:id="@+id/weatherIcon"
+        android:layout_width="134dp"
+        android:layout_height="133dp"
+        android:layout_marginStart="138dp"
+        android:layout_marginEnd="139dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/country"
+        app:srcCompat="@android:drawable/btn_star" />
 
     <TextView
-        android:id="@+id/location"
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:fontFamily="@font/amaranth_italic"
-        android:maxLength="30"
-        android:text="LOCATION"
-        android:textAlignment="viewStart"
+
+        android:layout_marginStart="190dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="191dp"
+        android:fontFamily="@font/amaranth2"
+        android:text="DATE"
         android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
+        app:layout_constraintTop_toBottomOf="@+id/locationSearch" />
+
+    <AutoCompleteTextView
+        android:id="@+id/locationSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="132dp"
+        android:width="190dp"
+        android:backgroundTint="#FFFFFF"
+        android:hint="Search for a place..."
+        android:maxLines="1"
+        android:minHeight="48dp"
+        android:shadowColor="#FBFBFB"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/resetLocation"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="129dp"
+        android:backgroundTint="#F49898"
+        android:text="X"
+        app:layout_constraintStart_toEndOf="@+id/search"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
