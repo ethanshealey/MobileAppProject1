@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         places = new Places();
 
         // test stuff
-        String[] test = new String[] {"1", "2"};
+        String[] test = new String[]{"1", "2"};
         System.out.println(Arrays.asList(test).indexOf("3"));
 
 
@@ -128,24 +128,24 @@ public class MainActivity extends AppCompatActivity {
          */
         locationSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
-		    // Generate new list of places based on current search text
+                    // Generate new list of places based on current search text
                     String[] placeList = places.load(locationSearch.getText().toString());
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, placeList);
                     locationSearch.setAdapter(adapter);
-		    // Enable/Disable search and reset box if search is empty
-		    if(locationSearch.getText().toString().matches("")) {
-		       searchBtn.setEnabled(false);
-		       reset.setEnabled(false);
-		    }
-		    else {
-		       searchBtn.setEnabled(true);
-		       reset.setEnabled(true);
-	   	    }
+                    // Enable/Disable search and reset box if search is empty
+                    if (locationSearch.getText().toString().matches("")) {
+                        searchBtn.setEnabled(false);
+                        reset.setEnabled(false);
+                    } else {
+                        searchBtn.setEnabled(true);
+                        reset.setEnabled(true);
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -153,33 +153,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable editable) { }
-        });
-
-        /**
-         * validateField
-        
-        locationSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(locationSearch.getText().toString().matches("")) {
-                    searchBtn.setEnabled(false);
-                    reset.setEnabled(false);
-                }
-                else {
-                    searchBtn.setEnabled(true);
-                    reset.setEnabled(true);
-                }
+            public void afterTextChanged(Editable editable) {
             }
-
-            @Override
-            public void afterTextChanged(Editable editable) { }
         });
-    }*/
-
+    }
     /**
      * setData -- waits until the weather object has been
      *            filled then sets the widgets to the new
