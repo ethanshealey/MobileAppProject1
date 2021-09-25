@@ -133,9 +133,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
+		    // Generate new list of places based on current search text
                     String[] placeList = places.load(locationSearch.getText().toString());
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, placeList);
                     locationSearch.setAdapter(adapter);
+		    // Enable/Disable search and reset box if search is empty
+		    if(locationSearch.getText().toString().matches("")) {
+		       searchBtn.setEnabled(false);
+		       reset.setEnabled(false);
+		    }
+		    else {
+		       searchBtn.setEnabled(true);
+		       reset.setEnabled(true);
+	   	    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -148,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * validateField
-         */
+        
         locationSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
@@ -168,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) { }
         });
-    }
+    }*/
 
     /**
      * setData -- waits until the weather object has been
