@@ -22,7 +22,7 @@ public class Places {
     /**
      * Create JSON array of places and flag
      */
-    JSONArray places = new JSONArray();
+    protected JSONArray places = new JSONArray();
     protected boolean searching = false;
 
     /**
@@ -67,7 +67,7 @@ public class Places {
      * Wrapper to call API in new thread
      * @param q - current value of search box
      */
-    public void getPlaces(String q) {
+    protected void getPlaces(String q) {
         new Thread(() -> {
             try {
                 getData(q);

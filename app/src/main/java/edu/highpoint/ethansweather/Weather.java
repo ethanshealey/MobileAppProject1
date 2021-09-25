@@ -22,7 +22,7 @@ public class Weather {
     /**
      * Object to hold the JSON recieved from API
      */
-    JSONObject obj;
+    protected JSONObject obj;
     protected boolean loading = false;
 
     /**
