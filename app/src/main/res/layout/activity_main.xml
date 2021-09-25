@@ -8,13 +8,37 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/background"
+        android:layout_width="628dp"
+        android:layout_height="926dp"
+        android:layout_marginTop="-50dp"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background" />
+
+    <ImageView
+        android:id="@+id/overlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1"
+        android:scaleY="100"
+        android:alpha=".5"
+        app:srcCompat="@drawable/box"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-1dp" />
+
+    <ImageView
+        android:id="@+id/shadow"
         android:layout_width="357dp"
         android:layout_height="669dp"
-        android:layout_marginStart="27dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="52dp"
-        android:layout_marginEnd="27dp"
+        android:layout_marginEnd="16dp"
+        android:alpha=".85"
         android:src="@drawable/box"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +140,7 @@
         android:id="@+id/locationSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="132dp"
         android:width="190dp"
         android:backgroundTint="#FFFFFF"

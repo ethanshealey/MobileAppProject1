@@ -85,16 +85,17 @@ public class Places {
      * load
      * Returns the list of strings
      */
-    public String[] load() throws JSONException {
+    public String[] load(String q) throws JSONException {
         searching = true;
+        getPlaces(q);
         List<String> locations = new ArrayList<String>();
         for(int i = 0; i < places.length(); i++) {
             locations.add((String) places.getJSONObject(i).get("name"));
         }
+        searching = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return locations.stream().toArray(String[]::new);
         }
-        searching = false;
         return new String[0];
     }
 

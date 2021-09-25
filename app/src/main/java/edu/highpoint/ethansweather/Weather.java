@@ -23,6 +23,7 @@ public class Weather {
      * Object to hold the JSON recieved from API
      */
     JSONObject obj;
+    protected boolean loading = false;
 
     /**
      * getData
@@ -63,8 +64,8 @@ public class Weather {
             catch(JSONException e) {
                 System.out.println(e);
             }
-
         }
+
     }
 
     /**
@@ -73,9 +74,11 @@ public class Weather {
      * @param loc - The user requested location
      */
     public void getWeather(String loc) {
+        loading = true;
         new Thread(() -> {
             try {
                 getData(loc);
+                loading = false;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -139,6 +142,10 @@ public class Weather {
      */
     public String getIcon() throws JSONException {
         return "https://" + obj.getJSONObject("current").getJSONObject("condition").get("icon").toString().substring(2);
+    }
+
+    public boolean isLoading() {
+        return loading;
     }
 
 }

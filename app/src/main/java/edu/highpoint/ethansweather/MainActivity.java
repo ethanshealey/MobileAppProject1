@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
      * Declare object used to store API information
      */
     Weather weather;
+    Places places;
 
     /**
      * On app start
@@ -80,7 +81,11 @@ public class MainActivity extends AppCompatActivity {
         condition = (TextView) findViewById(R.id.condition);
         icon = (ImageView) findViewById(R.id.weatherIcon);
         weather = new Weather();
-        weather.obj = null;
+        places = new Places();
+
+        // test stuff
+        String[] test = new String[] {"1", "2"};
+        System.out.println(Arrays.asList(test).indexOf("3"));
 
 
         /**
@@ -99,12 +104,9 @@ public class MainActivity extends AppCompatActivity {
          */
         searchBtn.setOnClickListener(view -> {
             // get text from location search bar
-            String query = locationSearch.getText().toString();
+            String query = locationSearch.getText().toString().replaceAll("'", "");
             // hide the keyboard
             hideKeyboard(view);
-            // reset the API object to null
-            if(!locationSearch.getText().toString().matches(""))
-                weather.obj = null;
             // call the API and set the data
             weather.getWeather(query);
             try {
@@ -121,6 +123,51 @@ public class MainActivity extends AppCompatActivity {
             locationSearch.setText("");
         });
 
+        /**
+         * onChange for locationSearch
+         */
+        locationSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                try {
+                    String[] placeList = places.load(locationSearch.getText().toString());
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, placeList);
+                    locationSearch.setAdapter(adapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
+
+        /**
+         * validateField
+         */
+        locationSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(locationSearch.getText().toString().matches("")) {
+                    searchBtn.setEnabled(false);
+                    reset.setEnabled(false);
+                }
+                else {
+                    searchBtn.setEnabled(true);
+                    reset.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
     }
 
     /**
@@ -132,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
      * @throws ParseException
      */
     public void setWeatherData() throws InterruptedException, JSONException, ParseException {
-        while(weather.obj == null) {
+        while(weather.isLoading()) {
             Thread.sleep(10);
         }
         temp.setText(weather.getCurrentTemp() + "°F");
