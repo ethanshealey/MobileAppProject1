@@ -163,7 +163,24 @@
         android:layout_marginTop="129dp"
         android:backgroundTint="#F49898"
         android:text="X"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toEndOf="@+id/search"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/unitSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-250dp"
+        android:layout_marginTop="4dp"
+        android:checked="true"
+        android:fontFamily="@font/amaranth"
+        android:textColor="#FFFFFF"
+        android:textOff="Celsius"
+        android:textOn="Fahrenheit"
+        android:theme="@style/SwitchTheme"
+        app:layout_constraintEnd_toStartOf="@+id/shadow"
+        app:layout_constraintStart_toEndOf="@+id/overlay"
+        app:layout_constraintTop_toBottomOf="@+id/overlay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

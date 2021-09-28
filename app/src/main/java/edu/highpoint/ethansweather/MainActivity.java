@@ -1,7 +1,11 @@
 package edu.highpoint.ethansweather;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,10 +14,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -52,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     TextView temp;
     TextView condition;
     ImageView icon;
+    Switch unitSwitch;
+    char unit;
+    private FusedLocationProviderClient flc;
 
     /**
      * Declare object used to store API information
@@ -80,17 +91,15 @@ public class MainActivity extends AppCompatActivity {
         temp = (TextView) findViewById(R.id.temp);
         condition = (TextView) findViewById(R.id.condition);
         icon = (ImageView) findViewById(R.id.weatherIcon);
+        unitSwitch = (Switch) findViewById(R.id.unitSwitch);
         weather = new Weather();
         places = new Places();
-
-        // test stuff
-        String[] test = new String[]{"1", "2"};
-        System.out.println(Arrays.asList(test).indexOf("3"));
-
 
         /**
          * Set default values to search bar and weather data
          */
+        unit = 'F';
+        unitSwitch.setText("Fahrenheit");
         locationSearch.setText("High Point, NC");
         weather.getWeather("High Point, NC");
         try {
@@ -121,6 +130,32 @@ public class MainActivity extends AppCompatActivity {
          */
         reset.setOnClickListener(view -> {
             locationSearch.setText("");
+        });
+
+        /**
+         * lsitener for unit switch
+         */
+        unitSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    unit = 'F';
+                    try {
+                        temp.setText(weather.getCurrentTemp(unit) + "°" + unit);
+                        unitSwitch.setText("Fahrenheit");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    unit = 'C';
+                    try {
+                        temp.setText(weather.getCurrentTemp(unit) + "°" + unit);
+                        unitSwitch.setText("Celsius");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         });
 
         /**
@@ -169,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         while(weather.isLoading()) {
             Thread.sleep(10);
         }
-        temp.setText(weather.getCurrentTemp() + "°F");
+        temp.setText(weather.getCurrentTemp(unit) + "°" + unit);
         location.setText(weather.getLocation());
         country.setText(weather.getCountry());
         condition.setText(weather.getCondition());

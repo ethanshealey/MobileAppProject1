@@ -17,6 +17,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Places
+ *
+ * Places is a class used to pull any
+ * possible location from a substring.
+ *
+ *
+ */
+
 public class Places {
 
     /**

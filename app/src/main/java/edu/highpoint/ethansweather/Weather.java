@@ -90,8 +90,14 @@ public class Weather {
      * @return - gets the current temp in Fahrenheit from the API object
      * @throws JSONException
      */
-    public String getCurrentTemp() throws JSONException {
-        return obj.getJSONObject("current").get("temp_f").toString();
+    public String getCurrentTemp(char unit) throws JSONException {
+        if(unit == 'F' || unit == 'f')
+            return obj.getJSONObject("current").get("temp_f").toString();
+        else if(unit == 'C' || unit == 'c')
+            return obj.getJSONObject("current").get("temp_c").toString();
+        else
+            return "ERROR";
+
     }
 
     /**
