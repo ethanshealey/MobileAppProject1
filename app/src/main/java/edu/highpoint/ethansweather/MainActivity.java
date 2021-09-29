@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     ImageView icon;
     Switch unitSwitch;
     char unit;
-    private FusedLocationProviderClient flc;
 
     /**
      * Declare object used to store API information
@@ -135,25 +134,22 @@ public class MainActivity extends AppCompatActivity {
         /**
          * lsitener for unit switch
          */
-        unitSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    unit = 'F';
-                    try {
-                        temp.setText(weather.getCurrentTemp(unit) + "°" + unit);
-                        unitSwitch.setText("Fahrenheit");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    unit = 'C';
-                    try {
-                        temp.setText(weather.getCurrentTemp(unit) + "°" + unit);
-                        unitSwitch.setText("Celsius");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+        unitSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                unit = 'F';
+                try {
+                    temp.setText(weather.getCurrentTemp(unit) + "°" + unit);
+                    unitSwitch.setText("Fahrenheit");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                unit = 'C';
+                try {
+                    temp.setText(weather.getCurrentTemp(unit) + "°" + unit);
+                    unitSwitch.setText("Celsius");
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -201,9 +197,11 @@ public class MainActivity extends AppCompatActivity {
      * @throws ParseException
      */
     public void setWeatherData() throws InterruptedException, JSONException, ParseException {
+        unitSwitch.setEnabled(false);
         while(weather.isLoading()) {
             Thread.sleep(10);
         }
+        unitSwitch.setEnabled(true);
         temp.setText(weather.getCurrentTemp(unit) + "°" + unit);
         location.setText(weather.getLocation());
         country.setText(weather.getCountry());
